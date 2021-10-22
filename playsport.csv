@@ -1,0 +1,15 @@
+Vista,Temperatura,Humedad,Viento,Class
+Soleado,Alta,Alta,Debil,negative
+Soleado,Alta,Alta,Fuerte,negative
+Nublado,Alta,Alta,Debil,positive
+Lluvioso,Media,Alta,Debil,positive
+Lluvioso,Baja,Normal,Debil,positive
+Lluvioso,Baja,Normal,Fuerte,negative
+Nublado,Baja,Normal,Fuerte,positive
+Soleado,Media,Alta,Debil,negative
+Soleado,Baja,Normal,Debil,positive
+Lluvioso,Media,Normal,Debil,positive
+Soleado,Media,Normal,Fuerte,positive
+Nublado,Media,Alta,Fuerte,positive
+Nublado,Alta,Normal,Debil,positive
+Lluvioso,Media,Alta,Fuerte,negative
