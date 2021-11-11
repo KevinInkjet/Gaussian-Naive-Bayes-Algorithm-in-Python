@@ -4,8 +4,8 @@ import numpy as np
 from decimal import *
 import statistics
 
-datos = pd.read_csv("C:/Users/Owner/Documents/LCC/Machine Learning/Naive-bayes/Hipotiroidismo.csv")
-#datos = pd.read_csv("C:/Users/Owner/Documents/LCC/Machine Learning/Naive-bayes/playsport.csv")
+#datos = pd.read_csv("C:/Users/Owner/Documents/LCC/Machine Learning/Naive-bayes/Hipotiroidismo.csv")
+datos = pd.read_csv("C:/Users/Owner/Documents/LCC/Machine Learning/Naive-bayes/playsport.csv")
 
 atributos = [feat for feat in datos]
 atributos.remove("Class")
@@ -73,7 +73,7 @@ def bayes(datos, atributos):
     for item in atributos:
         if numeric[i] == False:
             for clase in np.unique(datos["Class"]):
-                print("Clase ", clase, " en ", item)
+                #print("Clase ", clase, " en ", item)
                 #subdata1 = datos[datos["Class"] == clase]
                 subdata1 = datos[datos[str(item)] == str(valores[i])]
                 subdata = subdata1[subdata1["Class"] == clase] #La longitud de subdata guarda la cantidad de items donde el valor introducido es igual a positive/negative
