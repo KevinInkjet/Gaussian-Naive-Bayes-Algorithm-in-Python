@@ -4,7 +4,7 @@ import numpy as np
 from decimal import *
 import statistics
 
-datos = pd.read_csv("C:/Users/Owner/Documents/LCC/Machine Learning/Naive-bayes/playsport.csv") #Write here the path of the dataset
+datos = pd.read_csv("playsport.csv") #Write here the path of the dataset
 
 atributos = [feat for feat in datos]
 atributos.remove("Class")
