@@ -4,14 +4,12 @@ import numpy as np
 from decimal import *
 import statistics
 
-#datos = pd.read_csv("C:/Users/Owner/Documents/LCC/Machine Learning/Naive-bayes/Hipotiroidismo.csv")
-datos = pd.read_csv("C:/Users/Owner/Documents/LCC/Machine Learning/Naive-bayes/playsport.csv")
+datos = pd.read_csv("C:/Users/Owner/Documents/LCC/Machine Learning/Naive-bayes/playsport.csv") #Write here the path of the dataset
 
 atributos = [feat for feat in datos]
 atributos.remove("Class")
 
 def valorReal(dataset, valor, item):
-    #print("oK")
     newdataset = []
     for object in dataset[item]:
         if object == '?':
@@ -24,46 +22,28 @@ def valorReal(dataset, valor, item):
     return res
 
 def bayes(datos, atributos):
-    '''
-    print("programa")
-    print(datos)
-    subdata = datos[datos["Class"] == "negative"] #Subdata de todos los datos donde la Class sea negativa
-    print(subdata["age"]) #Imprime sólo los datos de la variable age del conjunto de datos
-    print(subdata["age"][0]) #Imprime el primer valor de la variable age del conjunto de datos
-    '''
     valores = []
     numeric = []
     #i = 0
     for item in atributos:
         bandera = True
-        print("Dame el valor de ", item)
+        print("Give me the value of ", item)
         uniq = np.unique(datos[item])
         if (uniq[0].isnumeric() == False):
             try:
                 Decimal(uniq[0])
             except InvalidOperation:
-                print("Valores: ", uniq)
-                #print("Es decimal o número")
+                print("Values: ", uniq)
                 bandera = False
         numeric.append(bandera)
         dato = input("Ingresa: ")
         valores.append(dato)
-        #i = i + 1
 
-    #print(len(valores))
-    #print(numeric)
+    subdatapositivo = datos[datos["Class"] == "positive"]
 
-    #Calcular la probabilidad del valor objetivo "positivo"
-    subdatapositivo = datos[datos["Class"] == "positive"] #Subdata de sólo los valores donde la clase da positivo
-    #print(len(subdatapositivo))
+    subdatanegativo = datos[datos["Class"] == "negative"] 
 
-    #Calcular la probabilidad del valor objetivo "negativo"
-    subdatanegativo = datos[datos["Class"] == "negative"] #Subdata de sólo los valores donde la clase da negativo
-    #print(len(subdatanegativo))
-    #print(len(datos))
-    #print(np.unique(datos["Class"]))
-
-    #Probabilidades condicionales
+    #Conditional probabilities
     cantidadpositivos = []
     cantidadnegativos = []
     positivelist = []
@@ -73,10 +53,8 @@ def bayes(datos, atributos):
     for item in atributos:
         if numeric[i] == False:
             for clase in np.unique(datos["Class"]):
-                #print("Clase ", clase, " en ", item)
-                #subdata1 = datos[datos["Class"] == clase]
                 subdata1 = datos[datos[str(item)] == str(valores[i])]
-                subdata = subdata1[subdata1["Class"] == clase] #La longitud de subdata guarda la cantidad de items donde el valor introducido es igual a positive/negative
+                subdata = subdata1[subdata1["Class"] == clase] 
                 if clase == "negative":
                     cantidadnegativos.append(len(subdata))
                     negativelist.append(len(subdata)/len(subdatanegativo))
@@ -84,11 +62,8 @@ def bayes(datos, atributos):
                     cantidadpositivos.append(len(subdata))
                     positivelist.append(len(subdata)/len(subdatapositivo))
                     i = i + 1
-                #print(len(subdata))
-            #print("Total en ese valor de item: ", len(subdata1)) #La longitud de subdata1 guarda la cantidad de datos donde el item es igual al valor introducido
 
-        else: #Si el item tiene valores reales
-            #print("Valor falso")
+        else: 
             for clase in np.unique(datos["Class"]):
                 if clase == "negative":
                     entrega = valorReal(datos[datos["Class"] == "negative"], valores[i], item)
@@ -99,32 +74,20 @@ def bayes(datos, atributos):
                     cantidadpositivos.append(entrega)
                     positivelist.append(entrega)
                     i = i + 1
-    #print(cantidadnegativos)
-    #print(cantidadpositivos)
-
-    #print("Subdatas positivos: ", len(subdatapositivo))
-    #print("Subdatas negativos: ", len(subdatanegativo))
 
     probvalorobjetosi = len(subdatapositivo)/len(datos)
     probvalorobjetono = len(subdatanegativo)/len(datos)
 
-    #print("Len datos: ", len(datos))
-
-    #Probabilidad de positive
-    #print("PROBABILIDAD POSITIVA")
     respos = probvalorobjetosi
-    #print("respos: ", respos)
     i = 0
     longitud = len(atributos)
-    #print(positivelist)
     for i in range (0, longitud):
         if positivelist[i] == 0.0:
             positivelist[i] = 1
         else:    
             respos = respos * positivelist[i]
-    print("La probabilidad de que sea positivo es: ", respos) #!Importante
+    print("The probability of being positive is: ", respos) 
 
-    #Probabilidad de negative
     resneg = probvalorobjetono
     i = 0
     longitud = len(atributos)
@@ -133,11 +96,11 @@ def bayes(datos, atributos):
             negativelist[i] = 1
         else:
             resneg = resneg * negativelist[i]
-    print("La probabilidad de que sea negativo es: ", resneg) #!Importante
+    print("The probability of being negative is: ", resneg)
 
     if respos > resneg:
-        print("Es más probable que sea positivo")
+        print("More likely to be positive")
     else:
-        print("Es más probable que sea negativo")
+        print("More likely to be negative")
 
 bayes(datos, atributos)
